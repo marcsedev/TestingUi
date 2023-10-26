@@ -1,5 +1,19 @@
 package com.marcsedev.testingui.components
 
+import androidx.compose.ui.test.assertContentDescriptionContains
+import androidx.compose.ui.test.assertContentDescriptionEquals
+import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.assertIsEnabled
+import androidx.compose.ui.test.assertIsFocused
+import androidx.compose.ui.test.assertIsNotDisplayed
+import androidx.compose.ui.test.assertIsNotEnabled
+import androidx.compose.ui.test.assertIsNotFocused
+import androidx.compose.ui.test.assertIsNotSelected
+import androidx.compose.ui.test.assertIsOff
+import androidx.compose.ui.test.assertIsOn
+import androidx.compose.ui.test.assertIsSelected
+import androidx.compose.ui.test.assertTextContains
+import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.doubleClick
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.longClick
@@ -64,6 +78,25 @@ class TestUiComponentTest {
             .performScrollTo()
             .performClick()
             .performImeAction() //add multiactions
+
+
+        //ASSERTIONS
+        composeTestRule.onNodeWithText("ada lovelace").assertExists()
+        composeTestRule.onNodeWithText("ada lovelace").assertDoesNotExist()
+        composeTestRule.onNodeWithText("ada lovelace").assertContentDescriptionContains("profile")
+        composeTestRule.onNodeWithText("ada lovelace").assertContentDescriptionEquals("profile")
+        composeTestRule.onNodeWithText("ada lovelace").assertIsDisplayed()
+        composeTestRule.onNodeWithText("ada lovelace").assertIsNotDisplayed()
+        composeTestRule.onNodeWithText("ada lovelace").assertIsEnabled()
+        composeTestRule.onNodeWithText("ada lovelace").assertIsNotEnabled()
+        composeTestRule.onNodeWithText("ada lovelace").assertIsSelected()
+        composeTestRule.onNodeWithText("ada lovelace").assertIsNotSelected()
+        composeTestRule.onNodeWithText("ada lovelace").assertIsFocused()
+        composeTestRule.onNodeWithText("ada lovelace").assertIsNotFocused()
+        composeTestRule.onNodeWithText("ada lovelace").assertIsOn()
+        composeTestRule.onNodeWithText("ada lovelace").assertIsOff()
+        composeTestRule.onNodeWithText("ada lovelace").assertTextEquals("")
+        composeTestRule.onNodeWithText("ada lovelace").assertTextContains("Ada Lovelace")
 
 
     }
