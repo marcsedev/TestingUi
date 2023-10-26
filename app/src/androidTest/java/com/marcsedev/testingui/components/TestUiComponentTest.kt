@@ -46,14 +46,13 @@ class TestUiComponentTest {
     @Test
     fun myFirstTest() {
         composeTestRule.setContent {
-            TestUiComponent()
+            UiComponent()
         }
 
         //FINDER
         composeTestRule.onNodeWithText("ada lovelace", ignoreCase = true)
         composeTestRule.onNodeWithTag("component2")
         composeTestRule.onNodeWithContentDescription("profileImage")
-
         composeTestRule.onAllNodesWithText("a", ignoreCase = true)
         composeTestRule.onAllNodesWithTag("component2")
         composeTestRule.onAllNodesWithContentDescription("profileImage")
@@ -62,23 +61,25 @@ class TestUiComponentTest {
         composeTestRule.onNodeWithText("ada lovelace", ignoreCase = true).performClick()
         composeTestRule.onAllNodesWithText("a").onFirst().performClick()
         composeTestRule.onNodeWithText("ada lovelace").performTouchInput {
-                longClick()
-                doubleClick()
-                swipeDown()
-                swipeUp()
-                swipeLeft()
-                swipeRight()
-            }
+            longClick()
+            doubleClick()
+            swipeDown()
+            swipeUp()
+            swipeLeft()
+            swipeRight()
+        }
         composeTestRule.onNodeWithText("ada lovelace").performScrollTo() //scrolling
-        composeTestRule.onNodeWithText("ada lovelace").performImeAction() //keyboard button action        composeTestRule.onNodeWithText("ada lovelace", ignoreCase = true)
+        composeTestRule.onNodeWithText("ada lovelace")
+            .performImeAction() //keyboard button action        composeTestRule.onNodeWithText("ada lovelace", ignoreCase = true)
         composeTestRule.onNodeWithText("ada lovelace").performTextClearance() //Delete TextField
-        composeTestRule.onNodeWithText("ada lovelace").performTextInput("add text") //Add to component
-        composeTestRule.onNodeWithText("ada lovelace").performTextReplacement("replace text") //Replace text
+        composeTestRule.onNodeWithText("ada lovelace")
+            .performTextInput("add text") //Add to component
+        composeTestRule.onNodeWithText("ada lovelace")
+            .performTextReplacement("replace text") //Replace text
         composeTestRule.onNodeWithText("ada lovelace")
             .performScrollTo()
             .performClick()
             .performImeAction() //add multiactions
-
 
         //ASSERTIONS
         composeTestRule.onNodeWithText("ada lovelace").assertExists()
@@ -97,7 +98,23 @@ class TestUiComponentTest {
         composeTestRule.onNodeWithText("ada lovelace").assertIsOff()
         composeTestRule.onNodeWithText("ada lovelace").assertTextEquals("")
         composeTestRule.onNodeWithText("ada lovelace").assertTextContains("Ada Lovelace")
+    }
 
+    @Test
+    fun whenComponentStart_thenVerifyContentIsAdaLovelace() {
+        composeTestRule.setContent {
+            UiComponent()
+        }
+        composeTestRule.onNodeWithText("ada lovelace", ignoreCase = true).assertExists()
+        composeTestRule.onNodeWithTag("textFieldName").assertTextContains("test", ignoreCase = true)
+    }
 
+    @Test
+    fun whenNamIsAdded_thenVerifyTextContainGreeting() {
+        composeTestRule.setContent {
+            UiComponent()
+        }
+        composeTestRule.onNodeWithTag("textFieldName").performTextReplacement("TEST")
+        composeTestRule.onNodeWithTag("textGreeting").assertTextEquals("Your name is TEST")
     }
 }
